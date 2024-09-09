@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FX-991 Advanced Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="calculator">
+        <h1>FX-991 Advanced Calculator</h1>
+        <form method="POST" action="/calculate" onsubmit="return validateExpression()">
+            <input type="text" name="expression" class="display" placeholder="0" id="expression" required>
+            <div class="buttons">
+                <!-- Number and basic operators -->
+                <button type="button" onclick="appendToDisplay('7')">7</button>
+                <button type="button" onclick="appendToDisplay('8')">8</button>
+                <button type="button" onclick="appendToDisplay('9')">9</button>
+                <button type="button" onclick="appendToDisplay('/')">÷</button>
+
+                <button type="button" onclick="appendToDisplay('4')">4</button>
+                <button type="button" onclick="appendToDisplay('5')">5</button>
+                <button type="button" onclick="appendToDisplay('6')">6</button>
+                <button type="button" onclick="appendToDisplay('*')">×</button>
+
+                <button type="button" onclick="appendToDisplay('1')">1</button>
+                <button type="button" onclick="appendToDisplay('2')">2</button>
+                <button type="button" onclick="appendToDisplay('3')">3</button>
+                <button type="button" onclick="appendToDisplay('-')">-</button>
+
+                <button type="button" onclick="appendToDisplay('0')">0</button>
+                <button type="button" onclick="appendToDisplay('.')">.</button>
+                <button type="submit">=</button>
+                <button type="button" onclick="appendToDisplay('+')">+</button>
+
+                <!-- Scientific operators -->
+                <button type="button" onclick="appendToDisplay('(')">(</button>
+                <button type="button" onclick="appendToDisplay(')')">)</button>
+                <button type="button" onclick="appendToDisplay('math.sqrt(')">√</button>
+                <button type="button" onclick="appendToDisplay('**')">xⁿ</button>
+
+                <button type="button" onclick="appendToDisplay('math.sin(')">sin</button>
+                <button type="button" onclick="appendToDisplay('math.cos(')">cos</button>
+                <button type="button" onclick="appendToDisplay('math.tan(')">tan</button>
+                <button type="button" onclick="appendToDisplay('math.log(')">log</button>
+
+                <button type="button" onclick="appendToDisplay('math.exp(')">exp</button>
+                <button type="button" onclick="appendToDisplay('math.factorial(')">n!</button>
+
+                <!-- Clear button -->
+                <button type="button" onclick="clearDisplay()">C</button>
+            </div>
+        </form>
+        <div class="result">
+            <h2>Result: {{ result }}</h2>
+        </div>
+    </div>
+
+    <script>
+        function appendToDisplay(value) {
+            document.querySelector('.display').value += value;
+        }
+
+        function clearDisplay() {
+            document.querySelector('.display').value = '';
+        }
+
+        function validateExpression() {
+            const expression = document.querySelector('.display').value;
+            try {
+                // Try parsing the expression to catch any syntax errors
+                eval(expression);
+            } catch (e) {
+                alert("Invalid expression! Please make sure you input a valid mathematical expression.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
